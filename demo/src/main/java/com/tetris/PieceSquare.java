@@ -1,8 +1,8 @@
 // File: src/main/java/com/tetris/PiezaO.java
 package com.tetris;
 
-public class PiezaO extends Pieza {
-    public PiezaO(){
+public class PieceSquare extends Pieza {
+    public PieceSquare(){
         super(2,2);
     }
 

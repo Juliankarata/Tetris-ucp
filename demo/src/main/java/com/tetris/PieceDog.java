@@ -1,8 +1,8 @@
 // File: src/main/java/com/tetris/PiezaS.java
 package com.tetris;
 
-public class PiezaS extends Pieza {
-    public PiezaS(){
+public class PieceDog extends Pieza {
+    public PieceDog(){
         super(3,3);
     }
 
@@ -25,3 +25,4 @@ public class PiezaS extends Pieza {
         return base;
     }
 }
+

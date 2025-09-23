@@ -2,7 +2,7 @@ package com.tetris;
 
 import java.util.Arrays;
 
-public class Tablero {
+public class Board {
     private final int ancho;
     private final int alto;
     private boolean[][] grilla; // true = celda ocupada
@@ -10,7 +10,7 @@ public class Tablero {
     private int piezaFila;     // fila superior donde está la pieza actual
     private int piezaColumna;  // columna izquierda donde está la pieza actual
 
-    public Tablero(int ancho, int alto){
+    public Board(int ancho, int alto){
         this.ancho = ancho;
         this.alto = alto;
         this.grilla = new boolean[alto][ancho];
