@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Board {
     private final int ancho;
     private final int alto;
-    private boolean[][] grilla; // true = celda ocupada
+    private boolean[][] tablero; // true = celda ocupada
     private Pieza piezaActual;
     private int piezaFila;     // fila superior donde está la pieza actual
     private int piezaColumna;  // columna izquierda donde está la pieza actual
@@ -13,8 +13,8 @@ public class Board {
     public Board(int ancho, int alto){
         this.ancho = ancho;
         this.alto = alto;
-        this.grilla = new boolean[alto][ancho];
-        for(int i=0; i<alto; i++) Arrays.fill(this.grilla[i], false);
+        this.tablero = new boolean[alto][ancho];
+        for(int i=0; i<alto; i++) Arrays.fill(this.tablero[i], false);
     }
 
     public int getAncho(){ return ancho; }
@@ -25,7 +25,7 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         for(int r=0; r<alto; r++){
             for(int c=0; c<ancho; c++){
-                sb.append(grilla[r][c] ? "X" : ".");
+                sb.append(tablero[r][c] ? "X" : ".");
             }
             sb.append('\n');
         }
@@ -42,14 +42,14 @@ public class Board {
     public Pieza obtenerPiezaActual(){ return piezaActual; }
 
     // Intenta mover la pieza una fila hacia abajo
-    // Si no puede, la fija en la grilla y la elimina como pieza actual
+    // Si no puede, la fija en el tablero y la elimina como pieza actual
     public boolean moverAbajo(){
         if(piezaActual == null) return false;
         if(puedeMoverAbajo()){
             piezaFila++;
             return true;
         } else {
-            fijarPiezaEnGrilla();
+            fijarPiezaEnTablero();
             eliminarLineasCompletas();
             piezaActual = null;
             return false;
@@ -68,14 +68,14 @@ public class Board {
                 int grFila = piezaFila + r + 1;
                 int grCol = piezaColumna + c;
                 if(grFila >= alto) return false;
-                if(grilla[grFila][grCol]) return false;
+                if(tablero[grFila][grCol]) return false;
             }
         }
         return true;
     }
 
-    // Fija la pieza en la grilla
-    private void fijarPiezaEnGrilla(){
+    // Fija la pieza en el tablero
+    private void fijarPiezaEnTablero(){
         boolean[][] forma = piezaActual.obtenerForma();
         for(int r=0; r<forma.length; r++){
             for(int c=0; c<forma[0].length; c++){
@@ -83,7 +83,7 @@ public class Board {
                     int grFila = piezaFila + r;
                     int grCol = piezaColumna + c;
                     if(grFila >= 0 && grFila < alto && grCol >= 0 && grCol < ancho){
-                        grilla[grFila][grCol] = true;
+                        tablero[grFila][grCol] = true;
                     }
                 }
             }
@@ -96,7 +96,7 @@ public class Board {
         for(int r=0; r<alto; r++){
             boolean completa = true;
             for(int c=0; c<ancho; c++){
-                if(!grilla[r][c]){
+                if(!tablero[r][c]){
                     completa = false;
                     break;
                 }
@@ -104,11 +104,35 @@ public class Board {
             if(completa){
                 eliminadas++;
                 for(int rr=r; rr>0; rr--){
-                    grilla[rr] = Arrays.copyOf(grilla[rr-1], ancho);
+                    tablero[rr] = Arrays.copyOf(tablero[rr-1], ancho);
                 }
-                grilla[0] = new boolean[ancho]; // fila vacía arriba
+                tablero[0] = new boolean[ancho]; // fila vacía arriba
             }
         }
         return eliminadas;
+    }
+
+    /**
+     * Devuelve una copia profunda del estado del tablero.
+     * Se expone principalmente para facilitar pruebas sin romper el encapsulamiento interno.
+     */
+    public boolean[][] obtenerTablero(){
+        boolean[][] copia = new boolean[alto][ancho];
+        for(int r=0; r<alto; r++){
+            copia[r] = Arrays.copyOf(tablero[r], ancho);
+        }
+        return copia;
+    }
+
+    /**
+     * Reemplaza el contenido del tablero por una copia de la matriz recibida.
+     * Se deja con visibilidad de paquete para que solo los tests en com.tetris puedan usarlo.
+     */
+    void establecerTablero(boolean[][] nuevoTablero){
+        if(nuevoTablero.length != alto) throw new IllegalArgumentException("Alto incompatible");
+        for(int r=0; r<alto; r++){
+            if(nuevoTablero[r].length != ancho) throw new IllegalArgumentException("Ancho incompatible en fila " + r);
+            tablero[r] = Arrays.copyOf(nuevoTablero[r], ancho);
+        }
     }
 }
