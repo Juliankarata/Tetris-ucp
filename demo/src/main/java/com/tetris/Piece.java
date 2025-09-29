@@ -1,12 +1,12 @@
 // File: src/main/java/com/tetris/Pieza.java
 package com.tetris;
 
-public abstract class Pieza {
+public abstract class Piece {
     protected int filas;       // alto de la matriz de la forma
     protected int columnas;    // ancho de la matriz de la forma
     protected int orientacion; // 0,1,2,3 (rotaciones de 90°)
 
-    protected Pieza(int filas, int columnas){
+    protected Piece(int filas, int columnas){
         this.filas = filas;
         this.columnas = columnas;
         this.orientacion = 0; // empieza sin rotación

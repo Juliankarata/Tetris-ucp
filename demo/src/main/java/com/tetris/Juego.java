@@ -31,14 +31,14 @@ public class Juego {
 
     
     private void crearYColocarPiezaAleatoria(){
-        Pieza p = crearPiezaAleatoria();
+        Piece p = crearPiezaAleatoria();
     
         int rotaciones = random.nextInt(4);
         for(int i=0;i<rotaciones;i++) p.rotarDerecha();
         tablero.ponerPiezaActual(p);
     }
 
-    private Pieza crearPiezaAleatoria(){
+    private Piece crearPiezaAleatoria(){
         int n = random.nextInt(7);
         switch(n){
             case 0: return new PieceStick();

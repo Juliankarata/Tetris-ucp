@@ -6,7 +6,7 @@ public class Board {
     private final int ancho;
     private final int alto;
     private boolean[][] grilla; // true = celda ocupada
-    private Pieza piezaActual;
+    private Piece piezaActual;
     private int piezaFila;     // fila superior donde está la pieza actual
     private int piezaColumna;  // columna izquierda donde está la pieza actual
 
@@ -33,13 +33,13 @@ public class Board {
     }
 
     // Coloca una nueva pieza en el tablero
-    public void ponerPiezaActual(Pieza pieza){
+    public void ponerPiezaActual(Piece pieza){
         this.piezaActual = pieza;
         this.piezaFila = 0;
         this.piezaColumna = Math.max(0, (ancho - pieza.obtenerForma()[0].length) / 2);
     }
 
-    public Pieza obtenerPiezaActual(){ return piezaActual; }
+    public Piece obtenerPiezaActual(){ return piezaActual; }
 
     // Intenta mover la pieza una fila hacia abajo
     // Si no puede, la fija en la grilla y la elimina como pieza actual

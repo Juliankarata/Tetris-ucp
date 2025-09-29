@@ -1,7 +1,7 @@
 // File: src/main/java/com/tetris/PiezaI.java
 package com.tetris;
 
-public class PieceStick extends Pieza {
+public class PieceStick extends Piece {
     public PieceStick(){
         super(4,4);
     }
